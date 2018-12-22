@@ -57,9 +57,21 @@ function operatorEvent( event ){
           $("#expression").val( $("#expression").val() + "*" );
       }
     }
+    else if ( event.target.innerText === "．" )
+    {
+      if ( next )
+      {
+          $("#expression").val( "." );
+          next = false ;
+      }
+      else
+      {
+          $("#expression").val( $("#expression").val() + "." );
+      }
+    }
     else if ( event.target.innerText === "＝" )
     {
-        var expressionString = $("#expression").val();
+        var expressionString = $("#expression").val().replace(/÷/g, "/");
 
         try
         {
@@ -97,7 +109,6 @@ function operatorEvent( event ){
 }
 
 function calculatorButtonAction(){
-    $("#dot"         ).click( defaultEvent  );
     $("#zero"        ).click( defaultEvent  );
     $("#one"         ).click( defaultEvent  );
     $("#two"         ).click( defaultEvent  );
@@ -110,6 +121,7 @@ function calculatorButtonAction(){
     $("#nine"        ).click( defaultEvent  );
     $("#backward"    ).click( backwardEvent );
     $("#clear"       ).click( clearEvent    );
+    $("#dot"         ).click( operatorEvent );
     $("#plus"        ).click( operatorEvent );
     $("#minus"       ).click( operatorEvent );
     $("#multiple"    ).click( operatorEvent );
