@@ -3,13 +3,44 @@
 <head>
     <meta charset="utf-8" />
     <title>FML</title>
-    <link rel="stylesheet" href="./lib/css/all.min.css">
+
+    <link rel="stylesheet" href="./lib/fontAwesome/css/all.min.css">
     <link rel="stylesheet" href="./lib/css/bootstrap.min.css">
     <script src="./lib/js/jquery.js"></script>
     <script src="./lib/js/popper.js"></script>
-    <script type="./lib/js/bootstrap.min.js"></script>
+    <script src="./lib/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <h4 class="navbar-brand">
+      <i class="fab fa-themeco"></i>
+      Front Side
+    </h4>
+  </nav>
+  <div class="row">
+  <div class="col-2">
+    <div class="list-group" id="myList" role="tablist">
+      <a class="list-group-item list-group-item-action text-center active" data-toggle="list" href="#changeColor" role="tab">
+        <i class="fas fa-palette"></i><br>
+        Change Color
+      </a>
+      <a class="list-group-item list-group-item-action text-center" data-toggle="list" href="#calculator" role="tab">
+        <i class="fas fa-calculator"></i><br>
+        Calculator
+      </a>
+      <a class="list-group-item list-group-item-action text-center" data-toggle="list" href="#breakfastShoppingCart" role="tab">
+        <i class="fas fa-shopping-cart"></i><br>
+        Shopping Cart
+      </a>
+    </div>
+  </div>
+  <div class="col-10">
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="changeColor" role="tabpanel">...</div>
+      <div class="tab-pane fade" id="calculator" role="tabpanel">a</div>
+      <div class="tab-pane fade" id="breakfastShoppingCart" role="tabpanel">...</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
