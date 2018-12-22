@@ -16,10 +16,10 @@ function colorChange( event ){
     }
 }
 
-function buttonAction(){
+function changeColorButtonAction(){
     $( "#changeBlueButton" ).click( colorChange );
     $( "#changeGreenButton" ).click( colorChange );
     $( "#resetButton" ).click( colorChange );
 }
 
-export { buttonAction } ;
+export { changeColorButtonAction } ;
