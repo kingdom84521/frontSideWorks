@@ -5,5 +5,6 @@ $( document ).ready(
   function(){
     $("#changeColor").load("../html/changeColor.html", changeColorButtonAction);
     $("#calculator").load("../html/calculator.html", calculatorButtonAction);
+    $("#breakfastShoppingCart").load("../html/shoppingCart.html");
   }
 )
