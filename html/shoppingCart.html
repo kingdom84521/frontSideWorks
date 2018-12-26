@@ -1,21 +1,90 @@
-<h1>早餐點餐系統</h1>
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">訂單編號</span>
+<div class="container-fluid">
+  <h1>早餐點餐系統</h1>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="orderId">訂單編號</span>
+    </div>
+    <input type="text" style="background-color: white" class="form-control" placeholder="將顯示該次訂單的訂單編號" readOnly>
   </div>
-  <input type="text" style="background-color: white" class="form-control" placeholder="將顯示該次訂單的訂單編號" readOnly>
+  <hr>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" id="chinese" class="custom-control-input" name="typeGroup" checked>
+    <label class="custom-control-label" for="chinese">中式</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" id="british" class="custom-control-input" name="typeGroup">
+    <label class="custom-control-label" for="british">英式</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" id="french" class="custom-control-input" name="typeGroup">
+    <label class="custom-control-label" for="french">法式</label>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-2">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">餐點</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01">
+          <option value="">aaa</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="unitPrice">單價</span>
+        </div>
+        <input type="text" class="form-control" placeholder="將顯示該商品的單價" readOnly>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="quantity">數量</span>
+        </div>
+        <input type="text" class="form-control" placeholder="請輸入您要購買的數量">
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="subtotal">小計</span>
+        </div>
+        <input type="text" class="form-control" placeholder="將顯示該筆購買資料的所需金額" readOnly>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary"><i class="fas fa-broom"></i><span> 清空購物車</span></button>
+      <button class="btn btn-success"><i class="fas fa-cart-plus"></i><span> 加入購物車</span></button>
+      <button class="btn btn-danger"><i class="fas fa-cash-register"></i><span> 結帳</span></button>
+    </div>
+  </div>
+  <hr>
+  <h2>購物車清單</h2>
+  <div class="row">
+    <div class="col">
+      <h4 class="custom-control-inline" id="oid">訂單：</h4>
+      <h4 class="custom-control-inline" id="total">總計：$</h4>
+    </div>
+  </div>
+  <hr>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">餐點</th>
+        <th scope="col">單價</th>
+        <th scope="col">數量</th>
+        <th scope="col">小計</th>
+        <th scope="col"><i class="fas fa-sort-down"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </div>
-<hr>
-<div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="chinese" class="custom-control-input" name="typeGroup">
-  <label class="custom-control-label" for="chinese">中式</label>
-</div>
-<div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="british" class="custom-control-input" name="typeGroup">
-  <label class="custom-control-label" for="british">英式</label>
-</div>
-<div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="french" class="custom-control-input" name="typeGroup">
-  <label class="custom-control-label" for="french">法式</label>
-</div>
-<hr>
