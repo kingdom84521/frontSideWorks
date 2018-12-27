@@ -24,9 +24,9 @@
     <div class="col-2">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <label class="input-group-text" for="inputGroupSelect01">餐點</label>
+          <label class="input-group-text" for="menu">餐點</label>
         </div>
-        <select class="custom-select" id="inputGroupSelect01">
+        <select class="custom-select" id="menu">
           <option value="">aaa</option>
         </select>
       </div>
@@ -34,25 +34,25 @@
     <div class="col-3">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="unitPrice">單價</span>
+          <span class="input-group-text">單價</span>
         </div>
-        <input type="text" class="form-control" placeholder="將顯示該商品的單價" readOnly>
+        <input id="unitPrice" type="text" class="form-control" placeholder="將顯示該商品的單價" readOnly>
       </div>
     </div>
     <div class="col-3">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="quantity">數量</span>
+          <span class="input-group-text">數量</span>
         </div>
-        <input type="text" class="form-control" placeholder="請輸入您要購買的數量">
+        <input id="quantity" type="text" class="form-control" value="0">
       </div>
     </div>
     <div class="col-3">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="subtotal">小計</span>
+          <span class="input-group-text">小計</span>
         </div>
-        <input type="text" class="form-control" placeholder="將顯示該筆購買資料的所需金額" readOnly>
+        <input id="subtotal" type="text" class="form-control" placeholder="將顯示該筆購買資料的所需金額" readOnly>
       </div>
     </div>
   </div>
