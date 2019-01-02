@@ -80,6 +80,8 @@ function shoppingCartAllAction()
           updateMenu();
       })
 
+    setTotal() ;
+
     $("#menu").change( setUnitPrice );
     $("#british").click( updateMenu ) ;
     $("#addToCart").click( addToCart ) ;
@@ -107,13 +109,44 @@ function getCartItems()
     return item ;
 }
 
-function deleteFromCart( event )
+function deleteFromCart()
 {
-    var deleteId = parseInt( $( this ).closest("tr").children(":first-child").text() ) ;
+    var deleteId = parseInt( $( this ).closest("tr").children(":first-child").text() ) - 1 ;
+    var nowPosition = $( this ).closest("tr") ;
 
-    shoppingCart.splice( deleteId - 1, 1 ) ;
+    shoppingCart.splice( deleteId, 1 ) ;
+
+    for ( var i in shoppingCart )
+    {
+        shoppingCart[i].id = parseInt( i ) + 1
+    }
+
+    for ( var i = 0 ; i < $("#cart tbody tr").length - deleteId ; ++i )
+    {
+        nowPosition = nowPosition.next("tr") ;
+
+        nowPosition.children(":first-child").text( i + deleteId + 1 ) ;
+    }
 
     $( this ).closest("tr").remove() ;
+
+    setTotal() ;
+}
+
+function getTotal()
+{
+    var total = 0 ;
+
+    $("#cart tbody tr").each( function(){
+          total += parseInt( $( this ).children(":nth-child(5)").text() ) ;
+    } )
+
+    return total ;
+}
+
+function setTotal()
+{
+    $("#total").text( "總計：$" + getTotal() ) ;
 }
 
 function addToCart()
@@ -122,7 +155,7 @@ function addToCart()
     {
         return false ;
     }
-    
+
     var nowItem = getCartItems() ;
 
     shoppingCart.push( nowItem ) ;
@@ -135,17 +168,27 @@ function addToCart()
                     <td>${nowItem.quantity}</td>
                     <td>${nowItem.subtotal}</td>
                     <td>
-                       <div>
-                          <button class="btn btn-danger btn-delete">
-                              <i class="fas fa-minus"></i>
-                          </button>
-                       </div>
+                       <button class="btn btn-danger btn-delete">
+                          <i class="fas fa-minus"></i>
+                       </button>
                     </td>
                  </tr>
                  `
     $("#cart tbody").append( nowRow ) ;
+    $("#quantity").val("0") ;
+
+    setTotal() ;
 
     $("#cart tbody tr:last td:last .btn-delete").click( deleteFromCart ) ;
+}
+
+function getOrderId()
+{
+    var lastId ;
+
+    $.ajax({
+        
+    })
 }
 
 export { shoppingCartAllAction } ;
