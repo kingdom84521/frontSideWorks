@@ -59,9 +59,9 @@
   <br>
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary"><i class="fas fa-broom"></i><span> 清空購物車</span></button>
-      <button class="btn btn-success"><i class="fas fa-cart-plus"></i><span> 加入購物車</span></button>
-      <button class="btn btn-danger"><i class="fas fa-cash-register"></i><span> 結帳</span></button>
+      <button id="clearCart" class="btn btn-primary"><i class="fas fa-broom"></i><span> 清空購物車</span></button>
+      <button id="addToCart" class="btn btn-success"><i class="fas fa-cart-plus"></i><span> 加入購物車</span></button>
+      <button id="checkout" class="btn btn-danger"><i class="fas fa-cash-register"></i><span> 結帳</span></button>
     </div>
   </div>
   <hr>
@@ -73,7 +73,7 @@
     </div>
   </div>
   <hr>
-  <table class="table">
+  <table id="cart" class="table">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
@@ -81,7 +81,7 @@
         <th scope="col">單價</th>
         <th scope="col">數量</th>
         <th scope="col">小計</th>
-        <th scope="col"><i class="fas fa-sort-down"></i></th>
+        <th scope="col">動作 <i class="fas fa-sort-down"></i></th>
       </tr>
     </thead>
     <tbody>

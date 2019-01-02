@@ -1,4 +1,6 @@
 var breakfastType = null ;
+var shoppingCart = [] ;
+
 
 function isChecked( id ){
     id += ":checked" ;
@@ -80,15 +82,70 @@ function shoppingCartAllAction()
 
     $("#menu").change( setUnitPrice );
     $("#british").click( updateMenu ) ;
+    $("#addToCart").click( addToCart ) ;
     $("#quantity").on( "input", setSubtotal ) ;
 }
 
-// $.getJSON("../data/breakfastType.json")
-//  .then( function( json ){
-//               breakfastType = json ;
-//
-//               updateMenu() ;
-//           } );
+function getCartItems()
+{
+    var nowId = parseInt( $("#cart tr:last td:first").text() );
+    var selected = $("#menu").find(":selected").text().slice( $("#menu").find(":selected").text().search("->") + "->".length ) ;
 
+    if ( isNaN( nowId ) )
+    {
+        nowId = 0 ;
+    }
+
+    var item = {
+                   "id":        nowId + 1,
+                   "name":      selected,
+                   "unitPrice": $("#unitPrice").val(),
+                   "quantity":  $("#quantity").val(),
+                   "subtotal":  $("#subtotal").val()
+               }
+
+    return item ;
+}
+
+function deleteFromCart( event )
+{
+    var deleteId = parseInt( $( this ).closest("tr").children(":first-child").text() ) ;
+
+    shoppingCart.splice( deleteId - 1, 1 ) ;
+
+    $( this ).closest("tr").remove() ;
+}
+
+function addToCart()
+{
+    if ( $("#quantity").val() === "0" )
+    {
+        return false ;
+    }
+    
+    var nowItem = getCartItems() ;
+
+    shoppingCart.push( nowItem ) ;
+
+    var nowRow = `
+                 <tr>
+                    <td scope="row">${nowItem.id}</td>
+                    <td>${nowItem.name}</td>
+                    <td>${nowItem.unitPrice}</td>
+                    <td>${nowItem.quantity}</td>
+                    <td>${nowItem.subtotal}</td>
+                    <td>
+                       <div>
+                          <button class="btn btn-danger btn-delete">
+                              <i class="fas fa-minus"></i>
+                          </button>
+                       </div>
+                    </td>
+                 </tr>
+                 `
+    $("#cart tbody").append( nowRow ) ;
+
+    $("#cart tbody tr:last td:last .btn-delete").click( deleteFromCart ) ;
+}
 
 export { shoppingCartAllAction } ;
