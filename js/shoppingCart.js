@@ -72,7 +72,9 @@ function setSubtotal()
 
 function shoppingCartAllAction()
 {
-    $.getJSON('../data/breakfastType.json')
+    getOrderId() ;
+
+    $.getJSON('./data/breakfastType.json')
       .then(( json ) => {
           breakfastType = json;
       })
@@ -187,8 +189,16 @@ function getOrderId()
     var lastId ;
 
     $.ajax({
-        
+        type: "POST",
+        datatype: "html",
+        data: {},
+        url: "./php/checkLastOrderId.php"
     })
+      .done( function( data ){
+          console.log( data ) ;
+      })
+      .fail( function( err ){
+      })
 }
 
 export { shoppingCartAllAction } ;
