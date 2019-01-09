@@ -88,6 +88,7 @@ function shoppingCartAllAction()
     $("#british").click( updateMenu ) ;
     $("#addToCart").click( addToCart ) ;
     $("#quantity").on( "input", setSubtotal ) ;
+    $("#checkout").click( checButtonAction ) ;
 }
 
 function getCartItems()
@@ -186,19 +187,37 @@ function addToCart()
 
 function getOrderId()
 {
-    var lastId ;
+    $.get("./php/getOrderId.php", "json")
+     .done( function( data ){
+          var todayDate = new Date( Date.now() ) ;
+          todayDate = todayDate.getFullYear().toString() + ( todayDate.getMonth() + 1).toString() + todayDate.getDate().toString() ;
+          data = $.parseJSON( data ) ;
 
-    $.ajax({
-        type: "POST",
-        datatype: "html",
-        data: {},
-        url: "./php/checkLastOrderId.php"
-    })
-      .done( function( data ){
-          console.log( data ) ;
-      })
-      .fail( function( err ){
-      })
+          var lastOrderId = data[ Object.keys( data )[ Object.keys( data ).length - 1 ] ].orderid ;
+
+          console.log( todayDate ) ;
+
+          /*if ( lastOrderId.startWith( todayDate ) )
+          {
+              console.log( true ) ;
+          }
+          else
+          {
+              console.log( false ) ;
+          }*/
+
+     } )
+}
+
+function checButtonAction()
+{
+    $.post("./php/checkoutAction.php", {
+        "cart": shoppingCart
+    }, "json")
+     .done( function( data ){
+        //data = $.parseJSON( data ) ;
+        console.log( data ) ;
+     } );
 }
 
 export { shoppingCartAllAction } ;
