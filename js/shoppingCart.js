@@ -187,26 +187,62 @@ function addToCart()
 
 function getOrderId()
 {
-    $.get("./php/getOrderId.php", "json")
-     .done( function( data ){
-          var todayDate = new Date( Date.now() ) ;
-          todayDate = todayDate.getFullYear().toString() + ( todayDate.getMonth() + 1).toString() + todayDate.getDate().toString() ;
-          data = $.parseJSON( data ) ;
+    var nowOrderId ;
+    $.ajax({
+          type: "GET",
+          url: "./php/getOrderId.php",
+          async: true,
+          dataType: "json",
+          success: function( data ){
+            console.log(data);
+            var todayDate = new Date( Date.now() ) ;
+            todayDate = numeral( todayDate.getFullYear() ).format("0000") + numeral( todayDate.getMonth() + 1 ).format("00") + numeral( todayDate.getDate() ).format("00") ;
 
-          var lastOrderId = data[ Object.keys( data )[ Object.keys( data ).length - 1 ] ].orderid ;
+            data = $.parseJSON( data ) ;
 
-          console.log( todayDate ) ;
-
-          /*if ( lastOrderId.startWith( todayDate ) )
-          {
-              console.log( true ) ;
+            if ( data && data.length <= 0 )
+            {
+                nowOrderId = todayDate + "0001" ;
+            }
+            else
+            {
+                var lastOrderId = data[ Object.keys( data )[ Object.keys( data ).length - 1 ] ].orderid ;
+                if ( lastOrderId.startsWith( todayDate ) )
+                {
+                    nowOrderId = lastOrderId + 1 ;
+                }
+                else
+                {
+                    nowOrderId = todayDate + "0001" ;
+                }
+            }
           }
-          else
-          {
-              console.log( false ) ;
-          }*/
+    })
+     /*.done( ( data ) => {
+              var todayDate = new Date( Date.now() ) ;
+              todayDate = numeral( todayDate.getFullYear() ).format("0000") + numeral( todayDate.getMonth() + 1 ).format("00") + numeral( todayDate.getDate() ).format("00") ;
 
-     } )
+              data = $.parseJSON( data ) ;
+
+              if ( data && data.length <= 0 )
+              {
+                  nowOrderId = todayDate + "0001" ;
+              }
+              else
+              {
+                  var lastOrderId = data[ Object.keys( data )[ Object.keys( data ).length - 1 ] ].orderid ;
+                  if ( lastOrderId.startsWith( todayDate ) )
+                  {
+                      nowOrderId = lastOrderId + 1 ;
+                  }
+                  else
+                  {
+                      nowOrderId = todayDate + "0001" ;
+                  }
+              }
+     } )*/
+     $("#orderId").val( nowOrderId ) ;
+     $("oid").text( "訂單：" + nowOrderId ) ;
 }
 
 function checButtonAction()
