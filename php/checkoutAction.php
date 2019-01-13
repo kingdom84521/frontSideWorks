@@ -2,6 +2,8 @@
   $login = "yumekuii" ;
   $pwd = "leesyan0812" ;
   $cart = $_POST['cart'] ;
+  $total = $_POST['total'] ;
+  $orderId = $_POST['orderId'] ;
 
   require("../lib/php/rb.php") ;
 
@@ -12,9 +14,15 @@
       die("Error: Can't connect to database");
   }
 
+  $newCart = R::dispense("order");
+  $newCart->orderid = $orderId ;
+  $newCart->total = $total ;
+  R::store( $newCart ) ;
+
   foreach( $cart as $cart )
   {
       $newItem = R::dispense("cart") ;
+      $newItem->oid = $orderId ;
       $newItem->name = $cart["name"] ;
       $newItem->unitPrice = $cart["unitPrice"] ;
       $newItem->quantity = $cart["quantity"] ;

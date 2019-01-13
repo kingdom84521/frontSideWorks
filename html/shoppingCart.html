@@ -2,9 +2,9 @@
   <h1>早餐點餐系統</h1>
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="orderId">訂單編號</span>
+      <span class="input-group-text">訂單編號</span>
     </div>
-    <input type="text" style="background-color: white" class="form-control" placeholder="將顯示該次訂單的訂單編號" readOnly>
+    <input id="orderId" type="text" style="background-color: white" class="form-control" placeholder="將顯示該次訂單的訂單編號" readOnly>
   </div>
   <hr>
   <div class="custom-control custom-radio custom-control-inline">
@@ -68,8 +68,8 @@
   <h2>購物車清單</h2>
   <div class="row">
     <div class="col">
-      <h4 class="custom-control-inline">訂單：</h4>
-      <h4 class="custom-control-inline">總計：$</h4>
+      <h4 class="custom-control-inline" id="oid">訂單：</h4>
+      <h4 class="custom-control-inline" id="total">總計：$</h4>
     </div>
   </div>
   <hr>

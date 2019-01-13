@@ -72,7 +72,7 @@ function setSubtotal()
 
 function shoppingCartAllAction()
 {
-    getOrderId() ;
+    setOrderId() ;
 
     $.getJSON('./data/breakfastType.json')
       .then(( json ) => {
@@ -88,7 +88,7 @@ function shoppingCartAllAction()
     $("#british").click( updateMenu ) ;
     $("#addToCart").click( addToCart ) ;
     $("#quantity").on( "input", setSubtotal ) ;
-    $("#checkout").click( checButtonAction ) ;
+    $("#checkout").click( checkoutButtonAction ) ;
 }
 
 function getCartItems()
@@ -185,40 +185,12 @@ function addToCart()
     $("#cart tbody tr:last td:last .btn-delete").click( deleteFromCart ) ;
 }
 
-function getOrderId()
+function setOrderId()
 {
     var nowOrderId ;
-    $.ajax({
-          type: "GET",
-          url: "./php/getOrderId.php",
-          async: true,
-          dataType: "json",
-          success: function( data ){
-            console.log(data);
-            var todayDate = new Date( Date.now() ) ;
-            todayDate = numeral( todayDate.getFullYear() ).format("0000") + numeral( todayDate.getMonth() + 1 ).format("00") + numeral( todayDate.getDate() ).format("00") ;
 
-            data = $.parseJSON( data ) ;
-
-            if ( data && data.length <= 0 )
-            {
-                nowOrderId = todayDate + "0001" ;
-            }
-            else
-            {
-                var lastOrderId = data[ Object.keys( data )[ Object.keys( data ).length - 1 ] ].orderid ;
-                if ( lastOrderId.startsWith( todayDate ) )
-                {
-                    nowOrderId = lastOrderId + 1 ;
-                }
-                else
-                {
-                    nowOrderId = todayDate + "0001" ;
-                }
-            }
-          }
-    })
-     /*.done( ( data ) => {
+    $.get("./php/getOrderId.php", "json")
+     .done( ( data ) => {
               var todayDate = new Date( Date.now() ) ;
               todayDate = numeral( todayDate.getFullYear() ).format("0000") + numeral( todayDate.getMonth() + 1 ).format("00") + numeral( todayDate.getDate() ).format("00") ;
 
@@ -233,22 +205,26 @@ function getOrderId()
                   var lastOrderId = data[ Object.keys( data )[ Object.keys( data ).length - 1 ] ].orderid ;
                   if ( lastOrderId.startsWith( todayDate ) )
                   {
-                      nowOrderId = lastOrderId + 1 ;
+                      nowOrderId = parseInt( lastOrderId ) + 1 ;
                   }
                   else
                   {
                       nowOrderId = todayDate + "0001" ;
                   }
               }
-     } )*/
-     $("#orderId").val( nowOrderId ) ;
-     $("oid").text( "訂單：" + nowOrderId ) ;
+
+              console.log( nowOrderId ) ;
+              $("#orderId").val( nowOrderId ) ;
+              $("#oid").text( "訂單：" + nowOrderId ) ;
+     } )
 }
 
-function checButtonAction()
+function checkoutButtonAction()
 {
     $.post("./php/checkoutAction.php", {
-        "cart": shoppingCart
+        "cart": shoppingCart,
+        "orderId": $("#orderId").val(),
+        "total": parseInt( $("#total").text().split('$')[1] )
     }, "json")
      .done( function( data ){
         //data = $.parseJSON( data ) ;
