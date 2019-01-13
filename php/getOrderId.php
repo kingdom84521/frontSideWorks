@@ -13,5 +13,7 @@
 
   $allItem = R::findAll("order") ;
 
+  R::close() ;
+
   echo json_encode( $allItem ) ;
 ?>

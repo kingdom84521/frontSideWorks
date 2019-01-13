@@ -1,90 +1,133 @@
 <div class="container-fluid">
-  <h1>早餐點餐系統</h1>
+  <div class="row">
+    <div class="col-3">
+      <h1>早餐點餐系統</h1>
+    </div>
+    <div class="col-3">
+      <div class="row mt-1">
+        <div class="col">
+          <button id="toBuy" class="btn btn-success btn-block">購物</button>
+        </div>
+        <div class="col">
+          <button id="toInquire" class="btn btn-warning btn-block">查詢</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="input-group mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text">訂單編號</span>
     </div>
-    <input id="orderId" type="text" style="background-color: white" class="form-control" placeholder="將顯示該次訂單的訂單編號" readOnly>
+    <input id="orderId" type="text" style="background-color: white" class="form-control" readOnly>
+    <select>
+
+    </select>
+    <button id="inquire" class="btn btn-outline-secondary" hidden>確定</button>
   </div>
   <hr>
-  <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" id="chinese" class="custom-control-input" name="typeGroup" checked>
-    <label class="custom-control-label" for="chinese">中式</label>
-  </div>
-  <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" id="british" class="custom-control-input" name="typeGroup">
-    <label class="custom-control-label" for="british">英式</label>
-  </div>
-  <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" id="french" class="custom-control-input" name="typeGroup">
-    <label class="custom-control-label" for="french">法式</label>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-2">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="menu">餐點</label>
+  <div id="buyContent">
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="chinese" class="custom-control-input" name="typeGroup" checked>
+      <label class="custom-control-label" for="chinese">中式</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="british" class="custom-control-input" name="typeGroup">
+      <label class="custom-control-label" for="british">英式</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="french" class="custom-control-input" name="typeGroup">
+      <label class="custom-control-label" for="french">法式</label>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-2">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="menu">餐點</label>
+          </div>
+          <select class="custom-select" id="menu">
+            <option value="">aaa</option>
+          </select>
         </div>
-        <select class="custom-select" id="menu">
-          <option value="">aaa</option>
-        </select>
+      </div>
+      <div class="col-3">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">單價</span>
+          </div>
+          <input id="unitPrice" type="text" class="form-control" placeholder="將顯示該商品的單價" readOnly>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">數量</span>
+          </div>
+          <input id="quantity" type="text" class="form-control" value="0">
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">小計</span>
+          </div>
+          <input id="subtotal" type="text" class="form-control" placeholder="將顯示該筆購買資料的所需金額" readOnly>
+        </div>
       </div>
     </div>
-    <div class="col-3">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">單價</span>
-        </div>
-        <input id="unitPrice" type="text" class="form-control" placeholder="將顯示該商品的單價" readOnly>
+    <br>
+    <div class="row">
+      <div class="col">
+        <button id="clearCart" class="btn btn-primary"><i class="fas fa-broom"></i><span> 清空購物車</span></button>
+        <button id="addToCart" class="btn btn-success"><i class="fas fa-cart-plus"></i><span> 加入購物車</span></button>
+        <button id="checkout" class="btn btn-danger"><i class="fas fa-cash-register"></i><span> 結帳</span></button>
       </div>
     </div>
-    <div class="col-3">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">數量</span>
-        </div>
-        <input id="quantity" type="text" class="form-control" value="0">
+    <hr>
+    <h2>購物車清單</h2>
+    <div class="row">
+      <div class="col">
+        <h4 class="custom-control-inline" id="oid">訂單：</h4>
+        <h4 class="custom-control-inline" id="total">總計：$</h4>
       </div>
     </div>
-    <div class="col-3">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">小計</span>
-        </div>
-        <input id="subtotal" type="text" class="form-control" placeholder="將顯示該筆購買資料的所需金額" readOnly>
+    <hr>
+    <table id="cart" class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">餐點</th>
+          <th scope="col">單價</th>
+          <th scope="col">數量</th>
+          <th scope="col">小計</th>
+          <th scope="col">動作 <i class="fas fa-sort-down"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class="inquireContent" hidden>
+    <h2>購物車清單</h2>
+    <div class="row">
+      <div class="col">
+        <h4 class="custom-control-inline" id="oid_inquire">訂單：</h4>
+        <h4 class="custom-control-inline" id="total_inquire">總計：$</h4>
       </div>
     </div>
+    <hr>
+    <table id="cart_inquire" class="table" hidden>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">餐點</th>
+          <th scope="col">單價</th>
+          <th scope="col">數量</th>
+          <th scope="col">小計</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </div>
-  <br>
-  <div class="row">
-    <div class="col">
-      <button id="clearCart" class="btn btn-primary"><i class="fas fa-broom"></i><span> 清空購物車</span></button>
-      <button id="addToCart" class="btn btn-success"><i class="fas fa-cart-plus"></i><span> 加入購物車</span></button>
-      <button id="checkout" class="btn btn-danger"><i class="fas fa-cash-register"></i><span> 結帳</span></button>
-    </div>
-  </div>
-  <hr>
-  <h2>購物車清單</h2>
-  <div class="row">
-    <div class="col">
-      <h4 class="custom-control-inline" id="oid">訂單：</h4>
-      <h4 class="custom-control-inline" id="total">總計：$</h4>
-    </div>
-  </div>
-  <hr>
-  <table id="cart" class="table">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">餐點</th>
-        <th scope="col">單價</th>
-        <th scope="col">數量</th>
-        <th scope="col">小計</th>
-        <th scope="col">動作 <i class="fas fa-sort-down"></i></th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
 </div>

@@ -89,6 +89,9 @@ function shoppingCartAllAction()
     $("#addToCart").click( addToCart ) ;
     $("#quantity").on( "input", setSubtotal ) ;
     $("#checkout").click( checkoutButtonAction ) ;
+    $("#clearCart").click( clearCartButtonAction ) ;
+    $("#toInquire").click( toInquireButtonAction ) ;
+    $("#toBuy").click( toBuyButtonAction ) ;
 }
 
 function getCartItems()
@@ -213,7 +216,7 @@ function setOrderId()
                   }
               }
 
-              console.log( nowOrderId ) ;
+              console.log( todayDate ) ;
               $("#orderId").val( nowOrderId ) ;
               $("#oid").text( "訂單：" + nowOrderId ) ;
      } )
@@ -221,15 +224,76 @@ function setOrderId()
 
 function checkoutButtonAction()
 {
-    $.post("./php/checkoutAction.php", {
-        "cart": shoppingCart,
-        "orderId": $("#orderId").val(),
-        "total": parseInt( $("#total").text().split('$')[1] )
-    }, "json")
-     .done( function( data ){
-        //data = $.parseJSON( data ) ;
-        console.log( data ) ;
-     } );
+    if ( $("#cart tbody tr").length <= 0 )
+    {
+        alert("購物車為空！請先進行購物再結帳。") ;
+        return false ;
+    }
+    else
+    {
+        $.post("./php/checkoutAction.php", {
+            "cart": shoppingCart,
+            "orderId": $("#orderId").val(),
+            "total": parseInt( $("#total").text().split('$')[1] )
+        }, "json")
+         .done( () => {
+            clearCartButtonAction() ;
+            setTotal() ;
+            setOrderId() ;
+         } );
+
+
+    }
+
+}
+
+function clearCartButtonAction( event )
+{
+    if ( $("#cart tbody tr").length <= 0 )
+    {
+        alert("購物車已經是空的了！") ;
+        return false ;
+    }
+    else
+    {
+        if ( $( this ).id = "checkout" )
+        {
+            shoppingCart = [] ;
+            $("#cart tbody").empty() ;
+        }
+        else
+        {
+            var choice = confirm("你確定要清除購物車內所有商品嗎？") ;
+            if ( choice )
+            {
+              shoppingCart = [] ;
+              $("#cart tbody").empty() ;
+            }
+        }
+    }
+}
+
+function toInquireButtonAction()
+{
+    $("#inquire").attr( "hidden", false ) ;
+    $("#buyContent").attr( "hidden", true ) ;
+    $("#inquireContent").attr( "hidden", false ) ;
+    $("#orderId").val("") ;
+    $("#orderId").attr("readOnly", false) ;
+}
+
+function toBuyButtonAction()
+{
+    $("#inquire").attr( "hidden", true ) ;
+    $("#buyContent").attr( "hidden", false ) ;
+    $("#inquireContent").attr( "hidden", true ) ;
+    setOrderId() ;
+    $("#orderId").attr("readOnly", false) ;
+}
+
+function inquireButtonAction()
+{
+    
 }
 
 export { shoppingCartAllAction } ;

@@ -29,4 +29,6 @@
       $newItem->subtotal = $cart["subtotal"] ;
       R::store( $newItem ) ;
   }
+
+  R::close() ;
 ?>
