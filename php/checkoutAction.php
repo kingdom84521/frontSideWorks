@@ -19,14 +19,14 @@
   $newCart->total = $total ;
   R::store( $newCart ) ;
 
-  foreach( $cart as $cart )
+  foreach( $carts as $cart )
   {
       $newItem = R::dispense("cart") ;
       $newItem->oid = $orderId ;
-      $newItem->name = $cart["name"] ;
-      $newItem->unitPrice = $cart["unitPrice"] ;
-      $newItem->quantity = $cart["quantity"] ;
-      $newItem->subtotal = $cart["subtotal"] ;
+      $newItem->name = $carts["name"] ;
+      $newItem->unitPrice = $carts["unitPrice"] ;
+      $newItem->quantity = $carts["quantity"] ;
+      $newItem->subtotal = $carts["subtotal"] ;
       R::store( $newItem ) ;
   }
 

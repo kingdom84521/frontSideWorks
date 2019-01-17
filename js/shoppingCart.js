@@ -85,13 +85,17 @@ function shoppingCartAllAction()
     setTotal() ;
 
     $("#menu").change( setUnitPrice );
+    $("#chinese").click( updateMenu ) ;
     $("#british").click( updateMenu ) ;
+    $("#french").click( updateMenu ) ;
     $("#addToCart").click( addToCart ) ;
     $("#quantity").on( "input", setSubtotal ) ;
     $("#checkout").click( checkoutButtonAction ) ;
     $("#clearCart").click( clearCartButtonAction ) ;
     $("#toInquire").click( toInquireButtonAction ) ;
     $("#toBuy").click( toBuyButtonAction ) ;
+    $("#inquire").click( inquireButtonAction ) ;
+    $("#inquire_clear").click( inquireClearButtonAction ) ;
 }
 
 function getCartItems()
@@ -216,7 +220,6 @@ function setOrderId()
                   }
               }
 
-              console.log( todayDate ) ;
               $("#orderId").val( nowOrderId ) ;
               $("#oid").text( "訂單：" + nowOrderId ) ;
      } )
@@ -276,24 +279,97 @@ function clearCartButtonAction( event )
 function toInquireButtonAction()
 {
     $("#inquire").attr( "hidden", false ) ;
+    $("#inquire_clear").attr( "hidden", false ) ;
     $("#buyContent").attr( "hidden", true ) ;
-    $("#inquireContent").attr( "hidden", false ) ;
-    $("#orderId").val("") ;
-    $("#orderId").attr("readOnly", false) ;
+    $("#orderId").attr("hidden", true) ;
+    $("#orderIdList").attr("hidden", false) ;
+
+    updateOrderIdList() ;
 }
 
 function toBuyButtonAction()
 {
     $("#inquire").attr( "hidden", true ) ;
+    $("#inquire_clear").attr( "hidden", true ) ;
     $("#buyContent").attr( "hidden", false ) ;
     $("#inquireContent").attr( "hidden", true ) ;
     setOrderId() ;
-    $("#orderId").attr("readOnly", false) ;
+    $("#orderId").attr("hidden", false) ;
+    $("#orderIdList").attr("hidden", true) ;
+}
+
+function updateOrderIdList()
+{
+    $.get("./php/getOrderId.php")
+     .done( ( data ) => {
+        $("#orderIdList").empty() ;
+        data = $.parseJSON( data ) ;
+
+        if ( data && data.length <= 0 )
+        {
+            var nothingOption = new Option( "沒有已結帳的訂單", -1, true ) ;
+            $("#orderIdList").append( nothingOption ) ;
+            $("#orderIdList option:first").attr( "disabled", true ) ;
+            $("#orderIdList option:first").attr( "hidden", true ) ;
+
+        }
+        else
+        {
+            $("#inquire").attr( "disabled", false ) ;
+            for ( var i in data )
+            {
+                var nowOption = new Option( data[i].orderid, data[i].id ) ;
+                $("#orderIdList").append( nowOption ) ;
+            }
+        }
+     } )
 }
 
 function inquireButtonAction()
 {
-    
+    $.get("./php/getContentById.php", {
+        "id": $("#orderIdList option:selected").val()
+    })
+     .done( ( data ) => {
+        $("#cart_inquire tbody").empty() ;
+
+        data = $.parseJSON( data ) ;
+
+        $("#oid_inquire").text( "訂單：" + $("#orderIdList option:selected").text() ) ;
+        $("#total_inquire").text( "總計：$" + data.total ) ;
+
+        for ( var i in Object.keys( data.content ) )
+        {
+            var newRow = `
+                         <tr>
+                          <td>${parseInt( i ) + 1}</td>
+                          <td>${data.content[ Object.keys( data.content )[ i ] ].name}</td>
+                          <td>${data.content[ Object.keys( data.content )[ i ] ].unit_price}</td>
+                          <td>${data.content[ Object.keys( data.content )[ i ] ].quantity}</td>
+                          <td>${data.content[ Object.keys( data.content )[ i ] ].subtotal}</td>
+                         </tr>
+                         `
+            $("#cart_inquire tbody").append( newRow ) ;
+        }
+
+        $("#inquireContent").attr( "hidden", false ) ;
+     } )
+}
+
+function inquireClearButtonAction()
+{
+    if ( $("#cart_inquire tbody tr").length <= 0 )
+    {
+        return false ;
+    }
+    var check = confirm("您確定要清除您的查詢結果嗎？")
+    if ( check )
+    {
+        $("#oid_inquire").text( "訂單：" ) ;
+        $("#total_inquire").text( "總計：" ) ;
+        $("#cart_inquire tbody").empty() ;
+        $("#inquireContent").attr("hidden", true) ;
+    }
 }
 
 export { shoppingCartAllAction } ;
